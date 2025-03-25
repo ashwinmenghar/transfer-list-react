@@ -22,6 +22,8 @@ const TransferList = () => {
         ? { left: [...prev.left, ...prev.right], right: [] }
         : { left: [], right: [...prev.right, ...prev.left] };
     });
+
+    setMove({ left: [], right: [] });
   };
 
   //   Toggle items
@@ -32,9 +34,13 @@ const TransferList = () => {
       return {
         left: isMovingLeft
           ? prev.left.filter((item) => item !== id)
+          : prev.left.includes(id)
+          ? prev.left.filter((item) => item !== id)
           : [...prev.left, id],
         right: isMovingLeft
-          ? [...prev.right, id]
+          ? prev.right.includes(id)
+            ? prev.right.filter((item) => item !== id)
+            : [...prev.right, id]
           : prev.right.filter((item) => item !== id),
       };
     });
@@ -61,7 +67,9 @@ const TransferList = () => {
   return (
     <div>
       <div className="container mt-10 mx-auto">
-        <h1 className="text-2xl font-semibold text-center">TransferList</h1>
+        <h1 className="text-2xl font-semibold text-center mb-5">
+          Transfer List
+        </h1>
 
         <div className="flex flex-1">
           <div className="leftbox border border-gray-400 flex flex-1 flex-col p-4">
